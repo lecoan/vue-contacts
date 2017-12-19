@@ -147,7 +147,6 @@
               </template>
             </el-table-column>
           </el-table>
-      </el-table>
     </el-dialog>
     <el-aside width="200px">
       <div id="search-div">
@@ -321,6 +320,7 @@ export default {
         let instance = axios.create({
             headers: {"X-CSRFToken": this.csrftoken}
             });
+        console.log(this.csrftoken)
         instance.post('api/contacts/', {
             contact: this.newContact,
             type: type
@@ -386,12 +386,9 @@ export default {
       this.$refs['modify-form'].clearValidate()
     }
   },
-  created() {
-  },
-  beforeCreate() {
-    this.$emit('loading', true);
+  mounted() {
     this.csrftoken = this.$cookie.get('csrftoken')
-    console.log('token:'+this.csrftoken)
+    this.$emit('loading', true);
     axios.get('api/contacts/', {
         params: {
               type: 'get'
